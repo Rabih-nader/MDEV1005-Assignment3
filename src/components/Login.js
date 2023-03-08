@@ -1,11 +1,10 @@
-//Login.js
-
 import firebase from "../firebase";
 import { useState } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = () => {
     firebase
@@ -21,12 +20,14 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
+        setErrorMessage(errorMessage);
       });
   };
 
   return (
     <div>
       <h2>Login</h2>
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="email">Email</label>
         <input
